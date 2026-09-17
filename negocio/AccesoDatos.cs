@@ -29,6 +29,12 @@ namespace negocio
             comando.CommandText = consulta;
         }
 
+        public void setearProcedimiento(string sp)
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = sp;
+        }
+
         public void ejecutarLectura()
         {
             comando.Connection = conexion;
@@ -41,7 +47,6 @@ namespace negocio
             {
                 throw ex;
             }
-
         }
 
         public void cerrarConexion()
@@ -51,7 +56,12 @@ namespace negocio
             conexion.Close();
         }
 
-        // Falta metodo: ejecutarAccion, setearparametro
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+
+
     }
 
 }

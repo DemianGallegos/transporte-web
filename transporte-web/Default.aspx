@@ -44,13 +44,11 @@
                 <div class="mb-3">
                     <label class="form-label">Pasajeros</label>
                     <div class="input-group">
-
                         <button type="button" id="btnMenos" runat="server"
                             class="btn btn-outline-secondary"
                             onclick="cambiarPasajero(-1)">
                             −
                         </button>
-
                         <input type="number" id="txtPasajeros" runat="server"
                             class="form-control text-center"
                             value="1" min="1" max="99" readonly />
@@ -60,7 +58,6 @@
                             onclick="cambiarPasajero(1)">
                             +
                         </button>
-
                     </div>
                 </div>
             </div>
@@ -68,7 +65,7 @@
                 <div class="mb-3">
                     <label class="form-label invisible">placeholder</label>
                     <div>
-                        <asp:Button ID="btnBuscar" CssClass="btn btn-primary w-100" runat="server" Text="Buscar" />
+                        <asp:Button ID="btnBuscar" CssClass="btn btn-primary w-100" runat="server" OnClick="btnBuscar_Click" Text="Buscar" />
                     </div>
                 </div>
             </div>
@@ -82,14 +79,10 @@
                             Sólo ida
                         </label>
                     </div>
-
-
                 </div>
-
             </div>
             <div class="col-auto">
                 <div class="form-check">
-
                     <input class="form-check-input" runat="server" type="radio" name="TipoViaje" id="rbtIdaVuelta">
                     <label class="form-check-label" for="rbtIdaVuelta">
                         Ida y vuelta
