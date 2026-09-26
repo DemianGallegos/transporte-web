@@ -12,13 +12,21 @@ namespace transporte_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<ViajeDisponible> listaViajeDisponible = (List<ViajeDisponible>)Session["listaViajeDisponible"];
-            //ViajeDisponibleNegocio negocio = new ViajeDisponibleNegocio();
+            List<ViajeDisponible> lista = (List<ViajeDisponible>)Session["listaViajeDisponible"];
+
             try
             {
                 if (!IsPostBack)
                 {
-                    repRepetidor.DataSource = listaViajeDisponible;
+
+                    lblCiudadOrigen.Text = lista[0].CiudadOrigen;
+                    lblCiudadDestino.Text = lista[0].CiudadDestino;
+
+                    string fechaSalida = DateTime.Now.ToString("dddd d 'de' MMMM");
+                    lblFechaSalida.Text = char.ToUpper(fechaSalida[0]) + fechaSalida.Substring(1);
+                    //lblFechaSalida.Text = lista[0].FechaSalida.ToString("dddd d 'de' MMMM");
+
+                    repRepetidor.DataSource = lista;
                     repRepetidor.DataBind();
                 }
             }
@@ -27,6 +35,30 @@ namespace transporte_web
 
                 throw ex;
             }
+        }
+
+        protected string formatearDuracion(object duracion)
+        {
+            int minutos = (int)duracion;
+            int horas = minutos / 60;
+            int mins = minutos % 60;
+
+            return $"{horas} hs {mins} min";
+        }
+
+        protected string calcularHoraLlegada(object horaSalida, object duracion)
+        {
+            TimeSpan hora = (TimeSpan)horaSalida;
+            TimeSpan dur = TimeSpan.FromMinutes((int)duracion);
+
+            return (hora + dur).ToString(@"hh\:mm");
+        }
+
+        protected void btnElegir_Command(object sender, CommandEventArgs e)
+        {
+            int idViaje = int.Parse(e.CommandArgument.ToString());
+            Response.Redirect("Asientos.aspx?idViaje=" + idViaje);
+
         }
     }
 }

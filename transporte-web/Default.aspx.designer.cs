@@ -51,15 +51,6 @@ namespace transporte_web
         protected global::System.Web.UI.WebControls.TextBox txtFechaVuelta;
 
         /// <summary>
-        /// Control btnMenos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnMenos;
-
-        /// <summary>
         /// Control txtPasajeros.
         /// </summary>
         /// <remarks>
@@ -67,15 +58,6 @@ namespace transporte_web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtPasajeros;
-
-        /// <summary>
-        /// Control btnMas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnMas;
 
         /// <summary>
         /// Control btnBuscar.

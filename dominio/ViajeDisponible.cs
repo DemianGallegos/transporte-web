@@ -8,7 +8,7 @@ namespace dominio
 {
     public class ViajeDisponible
     {
-        public int Id { get; set; }
+        public int IdViaje { get; set; }
         public DateTime FechaSalida { get; set; }
         public TimeSpan HoraSalida { get; set; }
         public decimal Precio { get; set; }

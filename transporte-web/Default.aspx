@@ -1,6 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="transporte_web.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+        function cambiarPasajero(valor) {
+
+            const input = document.getElementById('txtPasajeros');
+            const actual = parseInt(input.value);
+            const nuevo = actual + valor;
+
+            if (nuevo >= 1 && nuevo <= 99) {
+                input.value = nuevo;
+            }
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container text-center mt-5">
@@ -44,20 +56,14 @@
                 <div class="mb-3">
                     <label class="form-label">Pasajeros</label>
                     <div class="input-group">
-                        <button type="button" id="btnMenos" runat="server"
-                            class="btn btn-outline-secondary"
-                            onclick="cambiarPasajero(-1)">
-                            −
-                        </button>
-                        <input type="number" id="txtPasajeros" runat="server"
-                            class="form-control text-center"
-                            value="1" min="1" max="99" readonly />
+                        <button type="button" id="btnMenos" class="btn btn-outline-secondary"
+                            onclick="cambiarPasajero(-1)">−</button>
 
-                        <button type="button" id="btnMas" runat="server"
-                            class="btn btn-outline-secondary"
-                            onclick="cambiarPasajero(1)">
-                            +
-                        </button>
+                        <input type="number" id="txtPasajeros" ClientIDMode="static" runat="server"
+                            class="form-control text-center" value="1" min="1" max="99" readonly />
+                        
+                        <button type="button" id="btnMas" class="btn btn-outline-secondary"
+                            onclick="cambiarPasajero(1)">+</button>
                     </div>
                 </div>
             </div>

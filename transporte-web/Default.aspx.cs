@@ -43,14 +43,33 @@ namespace transporte_web
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             ViajeDisponibleNegocio negocio = new ViajeDisponibleNegocio();
-            List<ViajeDisponible> listaViajeDisponible = negocio.listarDisponiblesConSP(
+            try
+            {
+                List<ViajeDisponible> listaViajeDisponible = negocio.listarDisponiblesConSP(
                 int.Parse(ddlCiudadOrigen.SelectedValue),
                 int.Parse(ddlCiudadDestino.SelectedValue),
                 DateTime.Parse(txtFechaIda.Text),
                 int.Parse(txtPasajeros.Value));
 
-            Session["listaViajeDisponible"] = listaViajeDisponible;
-            Response.Redirect("Viajes.aspx", false);
+                if (listaViajeDisponible == null || listaViajeDisponible.Count == 0)
+                {
+                    Response.Write("<script>alert('No se encontraron servicios disponibles para esa fecha o destino.');</script>");
+                
+                }
+                else
+                {
+                    Session["listaViajeDisponible"] = listaViajeDisponible;
+                    Response.Redirect("Viajes.aspx", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+           
+
+          
         }
     }
 }

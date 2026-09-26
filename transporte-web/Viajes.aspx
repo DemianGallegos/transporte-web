@@ -6,10 +6,20 @@
     <div class="row mt-3">
         <div class="col-2"></div>
         <div class="col-10">
-            <div class="h5 pt-3">Seleccioná tu pasaje de IDA</div>
-            <div class="h5">Ciudad Ciudad. Provincia --> Ciudad Ciudad. Provincia</div>
+            <div class="h5 mt-3">Seleccioná tu pasaje de IDA</div>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <asp:Label ID="lblCiudadOrigen" runat="server" />
+                </li>
+                <li class="list-inline-item">→</li>
+                <li class="list-inline-item">
+                    <asp:Label ID="lblCiudadDestino" runat="server" />
+                </li>
+                <li class="list-inline-item ms-2">
+                    <asp:Label ID="lblFechaSalida" runat="server" />
+                </li>
+            </ul>
             <!-- Botón Modificar -->
-            <div class="h5">Lunes 10 de Octubre</div>
         </div>
         <!--<div class="col-1"></div>-->
     </div>
@@ -26,26 +36,30 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-4">
-                                            <div class="h5">Sale</div>
-                                            <div><%#Eval("HoraSalida")%></div>
+                                            <div class="h6 text-body-secondary">Duración</div>
+                                            <div class="small text-body-secondary"><%#formatearDuracion(Eval("Duracion"))%></div>
                                         </div>
                                         <div class="col-4">
-                                            <div>TT hs TT min</div>
+                                            <div class="h6">Sale</div>
+                                            <div><%#((TimeSpan)Eval("HoraSalida")).ToString(@"hh\:mm")%></div>
                                         </div>
+
                                         <div class="col-4">
-                                            <div class="h5">LLega</div>
-                                            <div>HoraLlegada</div>
+                                            <div class="h6">LLega</div>
+                                            <div><%# calcularHoraLlegada(Eval("HoraSalida"), Eval("Duracion")) %></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <p>Precio desde</p>
-                                            <p>$ xxxxx,xx</p>
+                                            <h6>Precio</h6>
+                                            <div><%#Eval("Precio")%></div>
                                         </div>
                                         <div class="col-6">
-                                            <asp:Button runat="server" CssClass="btn btn-primary" Text="Elegir" />
+                                            <asp:Button ID="btnElegir" runat="server" CommandName="Elegir"
+                                                CommandArgument='<%# Eval("Id") %>' OnCommand="btnElegir_Command"
+                                                CssClass="btn btn-primary" Text="Elegir" />
                                         </div>
                                     </div>
                                 </div>
