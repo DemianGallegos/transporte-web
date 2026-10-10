@@ -59,6 +59,7 @@ namespace transporte_web
                 else
                 {
                     Session["listaViajeDisponible"] = listaViajeDisponible;
+                    Session["cantidadPasajeros"] = txtPasajeros.Value;
                     Response.Redirect("Viajes.aspx", false);
                 }
             }

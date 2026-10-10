@@ -11,6 +11,6 @@ namespace dominio
         public int Id { get; set; }
         public int NumeroAsiento { get; set; }
         public AsientoTipo Tipo { get; set; }
-        public decimal Incremento { get; set; }
+
     }
 }

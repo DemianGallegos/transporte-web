@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace transporte_web
 {
@@ -11,22 +13,85 @@ namespace transporte_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if para que no se pinche por carga accidental, etc
+            if (!IsPostBack)
+            {
+                int idViaje = int.Parse(Request.QueryString["idViaje"].ToString());
+                CeldaPlantillaNegocio negocio = new CeldaPlantillaNegocio();
 
+                try
+                {
+                    List<CeldaPlantilla> listaCeldasPlantilla = negocio.listarCeldasConSP(idViaje);
 
-            int idViaje = int.Parse(Request.QueryString["idViaje"].ToString());
+                    dibujarPlantilla(listaCeldasPlantilla, 1, tblPisoSuperior);
+                    dibujarPlantilla(listaCeldasPlantilla, 2, tblPisoInferior);
+                }
+                catch (Exception ex)
+                {
 
-            //Primero recupero la plantilla de ese viaje.
-            //Luego pareceria mas razonable un metodo celdaNegocio para construir la plantilla
-            //y otro para fijarme en esa plantilla cuales estan ocupados y cuales no.
-            //y recien ahi le muestro al usuario
+                    throw ex;
+                }
+            }
 
-            //YO CREO QUE HAY QUE hay que agregar un dato mas en la consulta que empieza en
-            //default, ese dato seria la plantilla que corresponde a ese micro de ese viaje.
-            //Luego guardada en la session listaViajesDisponible, buscar el lugar (ejemplo [2]
-            //) donde esté el Id del Viaje y el Id de la Plantilla coincidan y listo
-            //analizarlo
+        }
 
+        protected void dibujarPlantilla(List<CeldaPlantilla> lista, int piso,
+            System.Web.UI.WebControls.Table tabla)
+        {
+            tabla.CssClass = "plano-piso";
+
+            List<CeldaPlantilla> celdasPiso = lista.Where(c => c.Piso == piso).ToList();
+            if (celdasPiso.Count == 0)
+                return;
+
+            int numrows = celdasPiso.Max(c => c.Fila);      // fila máxima
+            int numcells = celdasPiso.Max(c => c.Columna);  // columna máxima 
+
+            for (int j = 1; j <= numrows; j++)
+            {
+                TableRow r = new TableRow();
+                for (int i = 1; i <= numcells; i++)
+                {
+                    CeldaPlantilla celda = lista.FirstOrDefault(c => c.Fila == j && c.Columna == i && c.Piso == piso);
+                    TableCell tc = new TableCell();
+                    
+                    if(celda != null)
+                    {
+                        switch (celda.Codigo)
+                        {
+                            case "A":
+                                if (celda.Ocupado)
+                                {
+                                    //tc.CssClass
+                                    tc.CssClass = "asiento-ocupado";
+                                    tc.Text = celda.NumeroAsiento.ToString();
+                                }
+                                else
+                                {
+                                    tc.CssClass = "asiento-libre";
+                                    tc.Text = celda.NumeroAsiento.ToString();
+                                    tc.Attributes.Add("onclick", $"seleccionarAsiento(this, {celda.IdAsiento})");
+                                }
+
+                                break;
+
+                            case "P":
+                                tc.CssClass = "pasillo";
+                                break;
+
+                            default:
+                                // E, W, B y cualquier otro especial
+                                tc.Text = celda.Codigo;
+                                tc.CssClass = "celda-especial";
+                                break;
+                        }
+                        
+                    }
+                    r.Cells.Add(tc);
+
+                }
+                tabla.Rows.Add(r);
+
+            }
         }
     }
 }

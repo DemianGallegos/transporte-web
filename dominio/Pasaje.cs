@@ -10,7 +10,7 @@ namespace dominio
     {
         public int Id { get; set; }
         public int NumeroPasaje { get; set; }
-        public Viaje Viaje { get; set; }
+        //public Viaje Viaje { get; set; }
         public Asiento Asiento { get; set; }
         public Pasajero Pasajero { get; set; }
         public DateTime FechaEmision { get; set; }

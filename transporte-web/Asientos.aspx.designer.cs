@@ -15,12 +15,39 @@ namespace transporte_web
     {
 
         /// <summary>
-        /// Control tblAsientos.
+        /// Control hdnCantidadPasajeros.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblAsientos;
+        protected global::System.Web.UI.WebControls.HiddenField hdnCantidadPasajeros;
+
+        /// <summary>
+        /// Control hdnIdAsiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnIdAsiento;
+
+        /// <summary>
+        /// Control tblPisoSuperior.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tblPisoSuperior;
+
+        /// <summary>
+        /// Control tblPisoInferior.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tblPisoInferior;
     }
 }

@@ -42,9 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asiento.cs" />
+    <Compile Include="CeldaPlantilla.cs" />
     <Compile Include="AsientoTipo.cs" />
-    <Compile Include="Celda.cs" />
-    <Compile Include="CeldaTipo.cs" />
     <Compile Include="Ciudad.cs" />
     <Compile Include="Micro.cs" />
     <Compile Include="MicroModelo.cs" />
@@ -54,10 +53,7 @@
     <Compile Include="Plantilla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
-    <Compile Include="Ruta.cs" />
-    <Compile Include="Viaje.cs" />
     <Compile Include="ViajeDisponible.cs" />
-    <Compile Include="ViajeEstado.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
