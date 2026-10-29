@@ -30,14 +30,12 @@ namespace transporte_web
                     ddlCiudadDestino.DataValueField = "Id";
                     ddlCiudadDestino.DataBind();
                 }
-                    
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -59,7 +57,7 @@ namespace transporte_web
                 else
                 {
                     Session["listaViajeDisponible"] = listaViajeDisponible;
-                    Session["cantidadPasajeros"] = txtPasajeros.Value;
+                    Session["cantidadPasajeros"] = int.Parse(txtPasajeros.Value);
                     Response.Redirect("Viajes.aspx", false);
                 }
             }

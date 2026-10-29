@@ -11,19 +11,32 @@ namespace transporte_web
 {
     public partial class Asientos : System.Web.UI.Page
     {
+        protected decimal precio;
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<ViajeDisponible> listaViajes = (List<ViajeDisponible>)Session["listaViajeDisponible"];
+
+            int idViaje = int.Parse(Request.QueryString["idViaje"].ToString());
+            CeldaPlantillaNegocio negocio = new CeldaPlantillaNegocio();
+
             if (!IsPostBack)
             {
-                int idViaje = int.Parse(Request.QueryString["idViaje"].ToString());
-                CeldaPlantillaNegocio negocio = new CeldaPlantillaNegocio();
-
                 try
                 {
-                    List<CeldaPlantilla> listaCeldasPlantilla = negocio.listarCeldasConSP(idViaje);
+                    precio = listaViajes[0].Precio;
 
-                    dibujarPlantilla(listaCeldasPlantilla, 1, tblPisoSuperior);
-                    dibujarPlantilla(listaCeldasPlantilla, 2, tblPisoInferior);
+                    lblFechaSalida.Text = listaViajes[0].FechaSalida.ToString("dddd d 'de' MMMM");
+                    lblHoraSalida.Text = listaViajes[0].HoraSalida.ToString(@"hh\:mm");
+                    lblCiudadOrigen.Text = listaViajes[0].CiudadOrigen;
+                    lblHoraLlegada.Text = calcularHoraLlegada(listaViajes[0].HoraSalida, listaViajes[0].Duracion);
+                    lblCiudadDestino.Text = listaViajes[0].CiudadDestino;
+                    //int cantPasajeros = (int)Session["cantidadPasajeros"];
+                    //lblCantPasajeros.Text = cantPasajeros.ToString();
+
+                    lblSubtotal.Text = "AR$ 0";
+
+                    List<CeldaPlantilla> listaCeldasPlantilla = negocio.listarCeldasConSP(idViaje);
+                    Session["listaCeldasPlantilla"] = listaCeldasPlantilla;
                 }
                 catch (Exception ex)
                 {
@@ -31,6 +44,9 @@ namespace transporte_web
                     throw ex;
                 }
             }
+            List<CeldaPlantilla> listaPlantilla = (List<CeldaPlantilla>)Session["listaCeldasPlantilla"];
+            dibujarPlantilla(listaPlantilla, 1, tblPisoSuperior);
+            dibujarPlantilla(listaPlantilla, 2, tblPisoInferior);
 
         }
 
@@ -67,8 +83,12 @@ namespace transporte_web
                                 }
                                 else
                                 {
-                                    tc.CssClass = "asiento-libre";
+                                    tc.CssClass = celda.AsientoTipo == "Cama" ? "asiento-cama" : "asiento-libre";
                                     tc.Text = celda.NumeroAsiento.ToString();
+                                    tc.Attributes.Add("data-id-asiento", celda.IdAsiento.ToString());
+                                    tc.Attributes.Add("data-tipo-asiento", celda.AsientoTipo);
+                                    tc.Attributes.Add("data-incremento", celda.Incremento.ToString(
+                                        System.Globalization.CultureInfo.InvariantCulture));
                                     tc.Attributes.Add("onclick", $"seleccionarAsiento(this, {celda.IdAsiento})");
                                 }
 
@@ -92,6 +112,37 @@ namespace transporte_web
                 tabla.Rows.Add(r);
 
             }
+        }
+
+        protected void btnContinuar_Click(object sender, EventArgs e)
+        {
+            string idsAsientos = hdnIdAsiento.Value;
+            int cant = (int)Session["cantidadPasajeros"];
+
+            if(string.IsNullOrEmpty(idsAsientos))
+            {
+                Response.Write("<script>alert('Seleccioná al menos un asiento.');</script>");
+                return;
+            }
+            
+            int cantidadSeleccionados = idsAsientos.Split(',').Length;
+
+            if (cantidadSeleccionados < cant)
+            {
+                Response.Write($"<script>alert('Debés seleccionar {cant} asientos.');</script>");
+                return;
+            }
+
+            Session["IdsAsientos"] = idsAsientos;
+            Response.Redirect("Pasajes.aspx", false);
+
+        }
+        protected string calcularHoraLlegada(object horaSalida, object duracion)
+        {
+            TimeSpan hora = (TimeSpan)horaSalida;
+            TimeSpan dur = TimeSpan.FromMinutes((int)duracion);
+
+            return (hora + dur).ToString(@"hh\:mm");
         }
     }
 }
