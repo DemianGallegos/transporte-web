@@ -24,6 +24,15 @@ namespace transporte_web
         protected global::System.Web.UI.WebControls.HiddenField hdnIdAsiento;
 
         /// <summary>
+        /// Control hdnNumeroAsiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnNumeroAsiento;
+
+        /// <summary>
         /// Control tblPisoSuperior.
         /// </summary>
         /// <remarks>
@@ -87,13 +96,13 @@ namespace transporte_web
         protected global::System.Web.UI.WebControls.Label lblCiudadDestino;
 
         /// <summary>
-        /// Control lblCantPasajeros.
+        /// Control pnlDetalleTipos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCantPasajeros;
+        protected global::System.Web.UI.WebControls.Panel pnlDetalleTipos;
 
         /// <summary>
         /// Control lblSubtotal.

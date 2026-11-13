@@ -45,12 +45,16 @@
     <Compile Include="CeldaPlantilla.cs" />
     <Compile Include="AsientoTipo.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="DocumentoTipo.cs" />
+    <Compile Include="Genero.cs" />
     <Compile Include="Micro.cs" />
     <Compile Include="MicroModelo.cs" />
+    <Compile Include="Nacionalidad.cs" />
     <Compile Include="Pasaje.cs" />
     <Compile Include="Pasajero.cs" />
     <Compile Include="PasajeroTipo.cs" />
     <Compile Include="Plantilla.cs" />
+    <Compile Include="PrefijoTelefonico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
     <Compile Include="ViajeDisponible.cs" />

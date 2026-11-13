@@ -24,7 +24,6 @@ namespace transporte_web
 
                     string fechaSalida = DateTime.Now.ToString("dddd d 'de' MMMM");
                     lblFechaSalida.Text = char.ToUpper(fechaSalida[0]) + fechaSalida.Substring(1);
-                    //lblFechaSalida.Text = lista[0].FechaSalida.ToString("dddd d 'de' MMMM");
 
                     repRepetidor.DataSource = lista;
                     repRepetidor.DataBind();

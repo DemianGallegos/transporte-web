@@ -23,15 +23,17 @@ namespace transporte_web
             {
                 try
                 {
-                    precio = listaViajes[0].Precio;
+                    //Validar con un if que que seleccionado no sea null
 
-                    lblFechaSalida.Text = listaViajes[0].FechaSalida.ToString("dddd d 'de' MMMM");
-                    lblHoraSalida.Text = listaViajes[0].HoraSalida.ToString(@"hh\:mm");
-                    lblCiudadOrigen.Text = listaViajes[0].CiudadOrigen;
-                    lblHoraLlegada.Text = calcularHoraLlegada(listaViajes[0].HoraSalida, listaViajes[0].Duracion);
-                    lblCiudadDestino.Text = listaViajes[0].CiudadDestino;
-                    //int cantPasajeros = (int)Session["cantidadPasajeros"];
-                    //lblCantPasajeros.Text = cantPasajeros.ToString();
+                    ViajeDisponible seleccionado = listaViajes.FirstOrDefault(v => v.Id == idViaje);
+
+                    precio = seleccionado.Precio;
+
+                    lblFechaSalida.Text = seleccionado.FechaSalida.ToString("dddd d 'de' MMMM");
+                    lblHoraSalida.Text = seleccionado.HoraSalida.ToString(@"hh\:mm");
+                    lblCiudadOrigen.Text = seleccionado.CiudadOrigen;
+                    lblHoraLlegada.Text = calcularHoraLlegada(seleccionado.HoraSalida, seleccionado.Duracion);
+                    lblCiudadDestino.Text = seleccionado.CiudadDestino;
 
                     lblSubtotal.Text = "AR$ 0";
 
@@ -86,6 +88,7 @@ namespace transporte_web
                                     tc.CssClass = celda.AsientoTipo == "Cama" ? "asiento-cama" : "asiento-libre";
                                     tc.Text = celda.NumeroAsiento.ToString();
                                     tc.Attributes.Add("data-id-asiento", celda.IdAsiento.ToString());
+                                    tc.Attributes.Add("data-numero-asiento", celda.NumeroAsiento.ToString());
                                     tc.Attributes.Add("data-tipo-asiento", celda.AsientoTipo);
                                     tc.Attributes.Add("data-incremento", celda.Incremento.ToString(
                                         System.Globalization.CultureInfo.InvariantCulture));
@@ -116,25 +119,29 @@ namespace transporte_web
 
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
-            string idsAsientos = hdnIdAsiento.Value;
+            string idsAsientosString = hdnIdAsiento.Value;
+            string numerosAsientosString = hdnNumeroAsiento.Value; 
             int cant = (int)Session["cantidadPasajeros"];
 
-            if(string.IsNullOrEmpty(idsAsientos))
+            if(string.IsNullOrEmpty(idsAsientosString))
             {
                 Response.Write("<script>alert('Seleccioná al menos un asiento.');</script>");
                 return;
             }
             
-            int cantidadSeleccionados = idsAsientos.Split(',').Length;
+            int cantidadSeleccionados = idsAsientosString.Split(',').Length;
 
-            if (cantidadSeleccionados < cant)
+            if (cantidadSeleccionados != cant)
             {
                 Response.Write($"<script>alert('Debés seleccionar {cant} asientos.');</script>");
                 return;
             }
 
+            int[] idsAsientos = Array.ConvertAll(idsAsientosString.Split(','), int.Parse);
+            int[] numerosAsientos = Array.ConvertAll(hdnNumeroAsiento.Value.Split(','), int.Parse);
             Session["IdsAsientos"] = idsAsientos;
-            Response.Redirect("Pasajes.aspx", false);
+            Session["NumerosAsientos"] = numerosAsientos;
+            Response.Redirect("Pasajeros.aspx", false);
 
         }
         protected string calcularHoraLlegada(object horaSalida, object duracion)

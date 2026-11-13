@@ -149,12 +149,9 @@
                 tipos[tipo] = (tipos[tipo] || 0) + 1;
             });
 
-            var detalleTipos = Object.entries(tipos)
-                .map(([tipo, cantidad]) => cantidad + " x " + tipo)
-                .join(", ");
-
 
             var ids = [];
+            var numeros = [];
             var total = 0;
 
             asientosSeleccionados.forEach(function (asiento) {
@@ -162,6 +159,10 @@
                 // Guardar el ID del asiento
                 if (asiento.dataset.idAsiento) {
                     ids.push(asiento.dataset.idAsiento);
+                }
+                // Guardar el Numero del asiento
+                if (asiento.dataset.numeroAsiento) {
+                    numeros.push(asiento.dataset.numeroAsiento);
                 }
 
                 // Calcular el precio de este asiento
@@ -179,10 +180,36 @@
             // Guardar los IDs para continuar a Pasajes.aspx
             hdn.value = ids.join(',');
 
-            // Actualizar la cantidad seleccionada
-            document.getElementById(
-            '<%= lblCantPasajeros.ClientID %>'
-            ).innerText = ids.length;
+            var detalle = document.getElementById(
+                '<%= pnlDetalleTipos.ClientID %>'
+            );
+
+            // Guardar los Números de asientos 
+            var hdnNumeros = document.getElementById(
+                '<%= hdnNumeroAsiento.ClientID %>'
+            );
+
+            hdnNumeros.value = numeros.join(',');
+
+
+            detalle.innerHTML = '';
+
+            Object.entries(tipos).forEach(function ([tipo, cantidad]) {
+
+                var asiento = Array.from(asientosSeleccionados).find(
+                    a => a.dataset.tipoAsiento === tipo
+                );
+
+                var precioUnitario = precioBase * parseFloat(asiento.dataset.incremento);
+
+                var fila = document.createElement('div');
+                fila.style.fontSize = '0.8em';
+
+                fila.innerText = cantidad + ' x ' + tipo +
+                    ' - AR$ ' + precioUnitario.toLocaleString('es-AR') + ' c/u';
+
+                detalle.appendChild(fila);
+            });
 
             // Mostrar el detalle solamente si hay asientos seleccionados
             document.getElementById('divDetalle').style.display =
@@ -203,6 +230,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
     <asp:HiddenField ID="hdnIdAsiento" runat="server" />
+    <asp:HiddenField ID="hdnNumeroAsiento" runat="server" />
 
     <div class="row mt-3">
         <div class="col-2"></div>
@@ -260,9 +288,8 @@
                             <!--Este bloque permanece oculto hasta que el pasajero no selecciona los asientos-->
                             <div id="divDetalle" style="display: none;">
                                 <div class="row">
-                                    <div class="col-auto">            
-                                        <asp:Label ID="lblCantPasajeros" runat="server" Text="Label"></asp:Label>
-                                        <span>Pasajero/s</span>
+                                    <div class="col-auto">
+                                        <asp:Panel ID="pnlDetalleTipos" runat="server"></asp:Panel>            
                                     </div>
                                     <!--<div class="col-auto">ARS 20.000</div>-->
                                     <div class="col-auto">

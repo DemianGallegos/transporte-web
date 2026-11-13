@@ -70,7 +70,7 @@
     <Content Include="Asientos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Pasajes.aspx" />
+    <Content Include="Pasajeros.aspx" />
     <Content Include="Viajes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -99,12 +99,12 @@
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
-    <Compile Include="Pasajes.aspx.cs">
-      <DependentUpon>Pasajes.aspx</DependentUpon>
+    <Compile Include="Pasajeros.aspx.cs">
+      <DependentUpon>Pasajeros.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pasajes.aspx.designer.cs">
-      <DependentUpon>Pasajes.aspx</DependentUpon>
+    <Compile Include="Pasajeros.aspx.designer.cs">
+      <DependentUpon>Pasajeros.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Viajes.aspx.cs">
