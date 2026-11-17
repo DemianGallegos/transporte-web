@@ -12,8 +12,8 @@
 
                     <!--Comienza el Repeater-->
 
-                    <asp:Repeater ID="repRepetidor" runat="server">
-                        <itemtemplate>
+                    <asp:Repeater ID="repRepetidor" OnItemDataBound="repRepetidor_ItemDataBound" runat="server">
+                        <ItemTemplate>
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <div>Pasajero <%# Eval("OrdenPasajero") %></div>
@@ -43,7 +43,6 @@
                                             <div class="mb-3">
                                                 <label for="DocumentoTipo" class="form-label">Documento</label>
                                                 <asp:DropDownList ID="ddlDocumentoTipo" CssClass="form-select" runat="server">
-                                                    <asp:ListItem Text="DNI"></asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -71,7 +70,6 @@
                                             <div class="mb-3">
                                                 <label for="lblGenero" class="form-label">Género</label>
                                                 <asp:DropDownList ID="ddlGenero" CssClass="form-select" runat="server">
-                                                    <asp:ListItem>Seleccionar</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -85,8 +83,7 @@
                                         <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="lblPrefijo" class="form-label">Prefijo</label>
-                                                <asp:DropDownList ID="ddlPrefijo" CssClass="form-select" runat="server">
-                                                    <asp:ListItem>Arg(+541)</asp:ListItem>
+                                                <asp:DropDownList ID="ddlPrefijoTel" CssClass="form-select" runat="server">
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -100,7 +97,7 @@
                                 </div>
                                 <div class="col-md-6"></div>
                             </div>
-                        </itemtemplate>
+                        </ItemTemplate>
                     </asp:Repeater>
 
 
@@ -109,11 +106,69 @@
 
                 </div>
                 <div class="col-4">
-                    <h5>Aqui el Resumen</h5>
-                    <div class="py-3">
-                        <asp:Button ID="IdContinuar" CssClass="btn btn-primary" runat="server" 
-                            OnClick="Continuar_Click" Text="Continuar" />
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Resumen
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-1">
+                                <!--Manejar col-auto y me-0 pe-0, ms-0 ps-0 -->
+                                <div class="col-auto fw-bold pe-1">Ida:</div>
+                                <div class="col-auto ps-0">
+                                    <asp:Label ID="lblFechaSalida" runat="server" Text="Label"></asp:Label>
+                                    <!--30 de octubre-->
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+
+                                <div class="col-auto fw-bold pe-1">Sal.</div>
+                                <div class="col-auto fw-bold ps-0">
+                                    <div class="d-flex gap-1">
+                                        <asp:Label ID="lblHoraSalida" runat="server" Text="Label"></asp:Label>
+                                        <span>hs, </span>
+                                        <asp:Label ID="lblCiudadOrigen" runat="server" />
+                                    </div>
+                                </div>
+                                <!--11:00 hs, Buenos Aires-->
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-auto pe-1">Lle.</div>
+                                <div class="col-auto ps-0">
+                                    <div class="d-flex gap-1">
+                                        <asp:Label ID="lblHoraLlegada" runat="server" />
+                                        <span>hs,</span>
+                                        <asp:Label ID="lblCiudadDestino" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Este bloque permanece oculto hasta que el pasajero no selecciona los asientos-->
+                            <div id="divDetalle">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <asp:Panel ID="pnlDetalleTipos" runat="server"></asp:Panel>
+                                    </div>
+                                    <!--<div class="col-auto">ARS 20.000</div>-->
+                                    <div class="col-auto">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-between mb-1">
+                                <div class="col-auto fw-bold">Total:</div>
+                                <div class="col-auto fw-bold">
+                                    <asp:Label ID="lblSubtotal" runat="server"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <asp:Button CssClass="btn btn-primary" ID="btnContinuar" runat="server"
+                                    OnClick="btnContinuar_Click" Text="Continuar" />
+                            </div>
+
+                        </div>
                     </div>
+
+
 
                 </div>
             </div>

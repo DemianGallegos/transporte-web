@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace dominio
+﻿namespace dominio
 {
-    public class DocumentoTipo
+    public enum DocumentoTipo
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
+        DNI = 1,
+        Pasaporte = 2,
+        CedulaDeIdentidad = 3
     }
 }

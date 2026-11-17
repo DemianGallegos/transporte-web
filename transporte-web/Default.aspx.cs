@@ -13,12 +13,12 @@ namespace transporte_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CiudadNegocio negocioCiudad = new CiudadNegocio();
+            CiudadNegocio ciudadNegocio = new CiudadNegocio();
             try
             {
                 if (!IsPostBack)
                 {
-                    List<Ciudad> listaCiudades = negocioCiudad.listar();
+                    List<Ciudad> listaCiudades = ciudadNegocio.listar();
 
                     ddlCiudadOrigen.DataSource = listaCiudades;
                     ddlCiudadOrigen.DataTextField = "Nombre";

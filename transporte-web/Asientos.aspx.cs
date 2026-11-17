@@ -26,6 +26,7 @@ namespace transporte_web
                     //Validar con un if que que seleccionado no sea null
 
                     ViajeDisponible seleccionado = listaViajes.FirstOrDefault(v => v.Id == idViaje);
+                    Session["viajeSeleccionado"] = seleccionado;
 
                     precio = seleccionado.Precio;
 

@@ -177,7 +177,7 @@
                 total += precioBase * incremento;
             });
 
-            // Guardar los IDs para continuar a Pasajes.aspx
+            // Guardar los IDs para continuar a Pasajeros.aspx
             hdn.value = ids.join(',');
 
             var detalle = document.getElementById(
@@ -309,7 +309,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> <!--Aqui termina el card Resumen-->
                 </div>
             </div>
         </div>

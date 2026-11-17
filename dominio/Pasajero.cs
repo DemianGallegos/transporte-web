@@ -20,7 +20,7 @@ namespace dominio
         public DateTime FechaNacimiento { get; set; }
         public Genero Genero { get; set; } // es un enum
         public string Email { get; set; }
-        public PrefijoTelefonico Prefijo { get; set; }
+        public PrefijoTel Prefijo { get; set; }
         public string TelefonoNumero { get; set; }
         
         //public PasajeroTipo Tipo { get; set; } Esto se va
