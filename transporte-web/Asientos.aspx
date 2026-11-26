@@ -152,6 +152,7 @@
 
             var ids = [];
             var numeros = [];
+            var incrementos = [];
             var total = 0;
 
             asientosSeleccionados.forEach(function (asiento) {
@@ -174,6 +175,8 @@
                     incremento = 1;
                 }
 
+                incrementos.push(incremento);
+
                 total += precioBase * incremento;
             });
 
@@ -190,6 +193,13 @@
             );
 
             hdnNumeros.value = numeros.join(',');
+
+            //Guardar el Incremento de los asientos
+            var hdnIncrementos = document.getElementById(
+                '<%= hdnIncrementoAsiento.ClientID %>'
+            );
+
+            hdnIncrementos.value = incrementos.join(',');
 
 
             detalle.innerHTML = '';
@@ -231,6 +241,7 @@
 
     <asp:HiddenField ID="hdnIdAsiento" runat="server" />
     <asp:HiddenField ID="hdnNumeroAsiento" runat="server" />
+    <asp:HiddenField ID="hdnIncrementoAsiento" runat="server" />
 
     <div class="row mt-3">
         <div class="col-2"></div>

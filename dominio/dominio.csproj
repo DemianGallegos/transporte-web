@@ -45,6 +45,7 @@
     <Compile Include="CeldaPlantilla.cs" />
     <Compile Include="AsientoTipo.cs" />
     <Compile Include="Ciudad.cs" />
+    <Compile Include="Compra.cs" />
     <Compile Include="DocumentoTipo.cs" />
     <Compile Include="Genero.cs" />
     <Compile Include="Micro.cs" />

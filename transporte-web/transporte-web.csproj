@@ -70,6 +70,7 @@
     <Content Include="Asientos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Pago.aspx" />
     <Content Include="Pasajeros.aspx" />
     <Content Include="Viajes.aspx" />
     <Content Include="Web.config" />
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pago.aspx.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pago.aspx.designer.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pasajeros.aspx.cs">
       <DependentUpon>Pasajeros.aspx</DependentUpon>

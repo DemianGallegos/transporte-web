@@ -12,6 +12,7 @@ namespace dominio
         public int OrdenPasajero { get; set; }
         public int IdAsiento { get; set; }
         public int NumeroAsiento { get; set; }
+        public decimal IncrementoAsiento { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DocumentoTipo Tipo { get; set; }

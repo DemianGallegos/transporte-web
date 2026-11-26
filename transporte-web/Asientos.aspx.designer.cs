@@ -33,6 +33,15 @@ namespace transporte_web
         protected global::System.Web.UI.WebControls.HiddenField hdnNumeroAsiento;
 
         /// <summary>
+        /// Control hdnIncrementoAsiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnIncrementoAsiento;
+
+        /// <summary>
         /// Control tblPisoSuperior.
         /// </summary>
         /// <remarks>

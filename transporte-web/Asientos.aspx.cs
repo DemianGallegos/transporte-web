@@ -72,8 +72,8 @@ namespace transporte_web
                 {
                     CeldaPlantilla celda = lista.FirstOrDefault(c => c.Fila == j && c.Columna == i && c.Piso == piso);
                     TableCell tc = new TableCell();
-                    
-                    if(celda != null)
+
+                    if (celda != null)
                     {
                         switch (celda.Codigo)
                         {
@@ -108,7 +108,7 @@ namespace transporte_web
                                 tc.CssClass = "celda-especial";
                                 break;
                         }
-                        
+
                     }
                     r.Cells.Add(tc);
 
@@ -121,15 +121,16 @@ namespace transporte_web
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
             string idsAsientosString = hdnIdAsiento.Value;
-            string numerosAsientosString = hdnNumeroAsiento.Value; 
+            string numerosAsientosString = hdnNumeroAsiento.Value;
+            //string incrementosAsientosString = hdnIncrementoAsiento.Value;
             int cant = (int)Session["cantidadPasajeros"];
 
-            if(string.IsNullOrEmpty(idsAsientosString))
+            if (string.IsNullOrEmpty(idsAsientosString))
             {
                 Response.Write("<script>alert('Seleccioná al menos un asiento.');</script>");
                 return;
             }
-            
+
             int cantidadSeleccionados = idsAsientosString.Split(',').Length;
 
             if (cantidadSeleccionados != cant)
@@ -140,8 +141,20 @@ namespace transporte_web
 
             int[] idsAsientos = Array.ConvertAll(idsAsientosString.Split(','), int.Parse);
             int[] numerosAsientos = Array.ConvertAll(hdnNumeroAsiento.Value.Split(','), int.Parse);
+            decimal[] incrementosAsientos = Array.ConvertAll(hdnIncrementoAsiento.Value.Split(','),
+                s => decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
+
+            if (idsAsientos.Length != numerosAsientos.Length ||
+                idsAsientos.Length != incrementosAsientos.Length)
+            {
+                Response.Write("<script>alert('Error en los datos de los asientos.');</script>");
+                return;
+            }
+
             Session["IdsAsientos"] = idsAsientos;
             Session["NumerosAsientos"] = numerosAsientos;
+            Session["IncrementosAsientos"] = incrementosAsientos;
+            
             Response.Redirect("Pasajeros.aspx", false);
 
         }

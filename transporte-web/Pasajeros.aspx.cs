@@ -17,6 +17,8 @@ namespace transporte_web
         protected void Page_Load(object sender, EventArgs e)
         {
             List<Pasajero> listaPasajeros = new List<Pasajero>();
+          
+            
             //acá validar que no traiga un null el metodo listar();
 
             if (!IsPostBack)
@@ -25,7 +27,7 @@ namespace transporte_web
                 {
                     cargarNacionalidades();
                     cargarPrefijosTel();
-                    
+
                     cargarResumen();
 
                     listaPasajeros = listar();
@@ -52,6 +54,7 @@ namespace transporte_web
         {
             int[] idsAsientos = (int[])Session["IdsAsientos"];
             int[] numerosAsientos = (int[])Session["NumerosAsientos"];
+            decimal[] incrementosAsientos = (decimal[])Session["IncrementosAsientos"];
 
             if (idsAsientos == null || numerosAsientos == null)
             {
@@ -74,6 +77,7 @@ namespace transporte_web
                 Pasajero aux = new Pasajero();
                 aux.NumeroAsiento = numerosAsientos[i];
                 aux.IdAsiento = idsAsientos[i];
+                aux.IncrementoAsiento = incrementosAsientos[i];
                 aux.OrdenPasajero = i + 1;
 
 
@@ -99,6 +103,10 @@ namespace transporte_web
 
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
+
+            // Validar que se Seleccionen carguen la cantidad de formularios que corrspondan
+            // Si es 1 pasajero 1, si son 3, 3 
+
             List<Pasajero> listaPasajeros = (List<Pasajero>)Session["ListaPasajeros"];
 
             foreach (RepeaterItem item in repRepetidor.Items)
@@ -138,7 +146,9 @@ namespace transporte_web
                 TextBox txtTelefono = (TextBox)item.FindControl("txtTelefono");
                 aux.TelefonoNumero = txtTelefono.Text;
 
-            }
+                Response.Redirect("Pago.aspx", false);
+
+            } 
         }
 
         protected void repRepetidor_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -182,6 +192,69 @@ namespace transporte_web
             lblCiudadOrigen.Text = seleccionado.CiudadOrigen;
             lblHoraLlegada.Text = calcularHoraLlegada(seleccionado.HoraSalida, seleccionado.Duracion);
             lblCiudadDestino.Text = seleccionado.CiudadDestino;
+
+            List<CeldaPlantilla> listaCeldas = (List<CeldaPlantilla>)Session["listaCeldasPlantilla"];
+
+            
+            
+            // Probando como reconstruir el pnlDetalle..
+
+            int[] idsAsientos = (int[])Session["IdsAsientos"];
+
+            List<CeldaPlantilla> asientosSeleccionados = listaCeldas
+                .Where(c => idsAsientos.Contains(c.IdAsiento))
+                .ToList();
+
+            int cantidadCamas = 0;
+            int cantidadSemicamas = 0;
+            decimal total = 0;
+
+            foreach (CeldaPlantilla asiento in asientosSeleccionados)
+            {
+                if (asiento.AsientoTipo == "Cama")
+                {
+                    cantidadCamas++;
+                }
+                else
+                {
+                    cantidadSemicamas++;
+                }
+
+                decimal precioAsiento = seleccionado.Precio * asiento.Incremento;
+                total += precioAsiento;
+            }
+
+            if (cantidadCamas > 0)
+            {
+                decimal precioUnitario = seleccionado.Precio * asientosSeleccionados
+                    .First(a => a.AsientoTipo == "Cama").Incremento;
+
+                Label lblCamas = new Label();
+                lblCamas.Style.Add("font-size", "0.8em");
+                lblCamas.Text = cantidadCamas + " x Cama - AR$ " +
+                    precioUnitario.ToString("N0") + " c/u";
+
+                pnlDetalleTipos.Controls.Add(lblCamas);
+                pnlDetalleTipos.Controls.Add(new LiteralControl("<br />"));
+            }
+
+            if (cantidadSemicamas > 0)
+            {
+                decimal precioUnitario = seleccionado.Precio *
+                    asientosSeleccionados.First(a => a.AsientoTipo == "Semi Cama").Incremento;
+
+                Label lblSemicamas = new Label();
+                lblSemicamas.Style.Add("font-size", "0.8em");
+                lblSemicamas.Text = cantidadSemicamas + " x Semicama - AR$ " +
+                    precioUnitario.ToString("N0") + " c/u";
+
+                pnlDetalleTipos.Controls.Add(lblSemicamas);
+                pnlDetalleTipos.Controls.Add(new LiteralControl("<br />"));
+            }
+
+            lblSubtotal.Text = "AR$ " + total.ToString("N0");
+            Session["Total"] = total.ToString();
+
         }
 
         protected string calcularHoraLlegada(object horaSalida, object duracion)
